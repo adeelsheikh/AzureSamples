@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSamples.Blobs", "Azure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSamples.Tables", "AzureSamples.Tables\AzureSamples.Tables.csproj", "{7F0878DE-5E80-4A32-94F0-D04DCEE70432}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSamples.Queues", "AzureSamples.Queues\AzureSamples.Queues.csproj", "{1585B474-7863-4F49-BE2C-DA146063A846}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7F0878DE-5E80-4A32-94F0-D04DCEE70432}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F0878DE-5E80-4A32-94F0-D04DCEE70432}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F0878DE-5E80-4A32-94F0-D04DCEE70432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1585B474-7863-4F49-BE2C-DA146063A846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1585B474-7863-4F49-BE2C-DA146063A846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1585B474-7863-4F49-BE2C-DA146063A846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1585B474-7863-4F49-BE2C-DA146063A846}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
