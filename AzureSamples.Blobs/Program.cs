@@ -18,11 +18,12 @@ namespace AzureSamples.Blobs
                 ////UploadBlockBlobFromFileAsync()
                 ////UploadBlockBlobFromStreamAsync()
                 ////UploadBlockBlobToDirectoryAsync()
-                DownloadBlobToFileAsync()
+                ////DownloadBlobToFileAsync()
                 ////PrintContainerMetadataAsync()
                 ////SetContainerMetadataAsync()
                 ////PrintContainerMetadataAsync()
                 ////CopyBlobAsync()
+                CreateSharedAccessPolicy()
                     .GetAwaiter().GetResult();
             }
             catch (Exception ex)
@@ -50,6 +51,36 @@ namespace AzureSamples.Blobs
             filepath = GetFilepath(filename);
 
             File.WriteAllText(filepath, "Hello, World!");
+        }
+
+        private static async Task CreateSharedAccessPolicy()
+        {
+            var container = await GetBlobContainerReference();
+
+            var sharedPolicy = new SharedAccessBlobPolicy
+            {
+                SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                Permissions = SharedAccessBlobPermissions.Read
+                            | SharedAccessBlobPermissions.Write
+                            | SharedAccessBlobPermissions.Delete
+                            | SharedAccessBlobPermissions.List
+                            | SharedAccessBlobPermissions.Add
+                            | SharedAccessBlobPermissions.Create
+            };
+
+            var policyIdentifier = "Policy 1";
+            var permissions = await container.GetPermissionsAsync();
+
+            if (permissions.SharedAccessPolicies.ContainsKey(policyIdentifier))
+            {
+                permissions.SharedAccessPolicies.Remove(policyIdentifier);
+            }
+
+            permissions.SharedAccessPolicies.Add(policyIdentifier, sharedPolicy);
+            await container.SetPermissionsAsync(permissions);
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Created shared policy: {policyIdentifier}");
         }
 
         private static async Task DownloadBlobToFileAsync()
