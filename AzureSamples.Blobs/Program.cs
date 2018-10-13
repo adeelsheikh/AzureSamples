@@ -1,6 +1,8 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -23,7 +25,8 @@ namespace AzureSamples.Blobs
                 ////SetContainerMetadataAsync()
                 ////PrintContainerMetadataAsync()
                 ////CopyBlobAsync()
-                CreateSharedAccessPolicy()
+                ////CreateSharedAccessPolicyAsync()
+                CreateCorsPolicyAsync()
                     .GetAwaiter().GetResult();
             }
             catch (Exception ex)
@@ -45,6 +48,28 @@ namespace AzureSamples.Blobs
             await copyBlob.StartCopyAsync(blob);
         }
 
+        private static async Task CreateCorsPolicyAsync()
+        {
+            var blobClient = GetBlobClient();
+
+            var serviceProperties = await blobClient.GetServicePropertiesAsync();
+
+            serviceProperties.Cors.CorsRules.Clear();
+            serviceProperties.Cors.CorsRules.Add(new CorsRule
+            {
+                AllowedMethods = CorsHttpMethods.Get,
+                AllowedOrigins = new List<string>() { "http://localhost:8080/" },
+
+                // Time in seconds that a preflight response should be cached by browser
+                MaxAgeInSeconds = 3600,
+            });
+
+            await GetBlobClient().SetServicePropertiesAsync(serviceProperties);
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Created CORS policy");
+        }
+
         private static void CreateHelloWorldFile(out string filepath, out string filename)
         {
             filename = GetFilename();
@@ -53,7 +78,7 @@ namespace AzureSamples.Blobs
             File.WriteAllText(filepath, "Hello, World!");
         }
 
-        private static async Task CreateSharedAccessPolicy()
+        private static async Task CreateSharedAccessPolicyAsync()
         {
             var container = await GetBlobContainerReference();
 
@@ -96,6 +121,15 @@ namespace AzureSamples.Blobs
             await blockBlob.DownloadToFileAsync(GetFilepath("Downloaded File.txt"), FileMode.OpenOrCreate);
         }
 
+        private static CloudBlobClient GetBlobClient()
+        {
+            // Get reference to Cloud Storage Account
+            var storageAccount = CloudStorageAccount.Parse(ConnectionString);
+
+            // Create Cloud Blob Client instance
+            return storageAccount.CreateCloudBlobClient();
+        }
+
         private static async Task<CloudBlobContainer> GetBlobContainerReference()
         {
             return await GetBlobContainerReference(ContainerName);
@@ -103,11 +137,7 @@ namespace AzureSamples.Blobs
 
         private static async Task<CloudBlobContainer> GetBlobContainerReference(string containerName)
         {
-            // Get reference to Cloud Storage Account
-            var storageAccount = CloudStorageAccount.Parse(ConnectionString);
-
-            // Create Cloud Blob Client instance
-            var blobClient = storageAccount.CreateCloudBlobClient();
+            var blobClient = GetBlobClient();
 
             // Get Cloud Blob Container reference
             var container = blobClient.GetContainerReference(containerName);
