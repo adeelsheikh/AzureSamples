@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSamples.Blobs", "AzureSamples.Blobs\AzureSamples.Blobs.csproj", "{7DE5DA5F-E62C-4D46-985E-9E6A6B79F8D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSamples.Tables", "AzureSamples.Tables\AzureSamples.Tables.csproj", "{7F0878DE-5E80-4A32-94F0-D04DCEE70432}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7DE5DA5F-E62C-4D46-985E-9E6A6B79F8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DE5DA5F-E62C-4D46-985E-9E6A6B79F8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DE5DA5F-E62C-4D46-985E-9E6A6B79F8D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F0878DE-5E80-4A32-94F0-D04DCEE70432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F0878DE-5E80-4A32-94F0-D04DCEE70432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F0878DE-5E80-4A32-94F0-D04DCEE70432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F0878DE-5E80-4A32-94F0-D04DCEE70432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
